@@ -3,7 +3,9 @@ package com.jeanloth.mobile.android.budgetbuddy.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -13,6 +15,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
@@ -62,9 +65,17 @@ fun BudgetBuddyTheme(
         }
     }
 
+    val shapes = Shapes(
+        extraSmall = RoundedCornerShape(20.dp),
+        small = RoundedCornerShape(20.dp),
+        medium = RoundedCornerShape(20.dp),  //<- used by `DropdownMenu`
+        large = RoundedCornerShape(20.dp)
+    )
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
+        shapes = shapes
     )
 }
