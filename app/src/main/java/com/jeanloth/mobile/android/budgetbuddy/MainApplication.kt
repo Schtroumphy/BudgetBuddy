@@ -23,6 +23,33 @@ class MainApplication : Application(){
             androidLogger()
             // Reference Android context
             androidContext(this@MainApplication)
+
+            modules(appModule, dataBaseModule, dataModule)
         }
     }
+}
+
+val appModule = module {
+    viewModelOf(::DashboardVM)
+}
+
+val dataModule = module {
+    single { ExpenseMapper() }
+    single<ExpenseRepository> { ExpenseRepositoryImpl(get(), get()) }
+}
+
+fun provideDataBase(application: Application): AppRoomDatabase =
+    Room.databaseBuilder(
+        application,
+        AppRoomDatabase::class.java,
+        AppRoomDatabase.DATABASE_NAME
+    ).
+    fallbackToDestructiveMigration().build()
+
+fun provideDao(postDataBase: AppRoomDatabase): ExpenseDao = postDataBase.expenseDao()
+
+
+val dataBaseModule= module {
+    single { provideDataBase(get()) }
+    single { provideDao(get()) }
 }
