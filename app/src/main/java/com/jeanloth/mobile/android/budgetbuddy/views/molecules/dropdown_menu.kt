@@ -39,36 +39,50 @@ import com.jeanloth.mobile.android.budgetbuddy.theme.LightBlue
 import com.jeanloth.mobile.android.budgetbuddy.theme.LightGreen1
 
 val paymentMethods = listOf(
-    MenuItem(Icons.Default.CreditCard, "Credit Card"),
-    MenuItem(Icons.Default.Money, "Cash"),
-    MenuItem(Icons.Default.Savings, "Savings"),
+    MenuItem(1, Icons.Default.CreditCard, "Credit Card"),
+    MenuItem(2, Icons.Default.Money, "Cash"),
+    MenuItem(3, Icons.Default.Savings, "Savings"),
 )
 
 val paymentMenuColor = LightGreen1
 val categoryMenuColor = LightBlue
 
 val categories = listOf(
-    MenuItem(Icons.Rounded.ShoppingBag, "Clothes"),
-    MenuItem(Icons.Rounded.Redeem, "Gift"),
-    MenuItem(Icons.Rounded.DirectionsCar, "Car"),
-    MenuItem(Icons.Rounded.Public, "Online"),
+    MenuItem(1, Icons.Rounded.ShoppingBag, "Clothes"),
+    MenuItem(2, Icons.Rounded.Redeem, "Gift"),
+    MenuItem(3, Icons.Rounded.DirectionsCar, "Car"),
+    MenuItem(4, Icons.Rounded.Public, "Online"),
 )
 
-class MenuItem(var icon: ImageVector, var label: String)
+class MenuItem(val id: Int, var icon: ImageVector, var label: String)
 
 @Composable
-fun PaymentMenu(modifier: Modifier = Modifier) {
-    CustomDropDown(modifier = modifier, paymentMethods, backgroundColor = paymentMenuColor)
+fun PaymentMenu(modifier: Modifier = Modifier, onItemSelected: ((Int) -> Unit)? = null) {
+    CustomDropDown(
+        modifier = modifier,
+        paymentMethods,
+        backgroundColor = paymentMenuColor,
+        onItemSelected = { onItemSelected?.invoke(it) }
+    )
 }
 
 @Composable
-fun CategoryMenu(modifier: Modifier = Modifier) {
-    CustomDropDown(modifier = modifier, categories, backgroundColor = categoryMenuColor)
+fun CategoryMenu(modifier: Modifier = Modifier, onItemSelected: ((Int) -> Unit)? = null) {
+    CustomDropDown(
+        modifier = modifier,
+        categories,
+        backgroundColor = categoryMenuColor,
+        onItemSelected = { onItemSelected?.invoke(it) }
+    )
 }
 
 @Composable
-fun CustomDropDown(modifier: Modifier = Modifier, items: List<MenuItem>, backgroundColor: Color = LightGreen1) {
-    var isPaymentMethodMenuExpanded by remember { mutableStateOf(false) }
+fun CustomDropDown(
+    modifier: Modifier = Modifier,
+    items: List<MenuItem>,
+    backgroundColor: Color = LightGreen1,
+    onItemSelected: ((Int) -> Unit)? = null,
+) {
     var isExpanded by remember { mutableStateOf(false) }
 
     var selectedItem by remember { mutableStateOf(items.first()) }
@@ -113,6 +127,7 @@ fun CustomDropDown(modifier: Modifier = Modifier, items: List<MenuItem>, backgro
                 DropdownMenuItem(onClick = {
                     selectedItem = item
                     isExpanded = false
+                    onItemSelected?.invoke(item.id)
                 }) {
                     DropDownItem(icon = item.icon, label = item.label)
                 }

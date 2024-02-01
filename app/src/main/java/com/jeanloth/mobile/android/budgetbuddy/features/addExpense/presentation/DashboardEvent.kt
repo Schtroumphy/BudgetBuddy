@@ -4,10 +4,10 @@ import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.data.local.en
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.ExpenseCategory
 
 sealed interface DashboardEvent {
-    object SaveExpense : DashboardEvent
-    object ShowBottomSheet : DashboardEvent
-    object HideBottomSheet : DashboardEvent
-    data class SetExpenseAmount(val amount: String) : DashboardEvent
+    data object SaveExpense : DashboardEvent
+    data object ShowBottomSheet : DashboardEvent
+    data object HideBottomSheet : DashboardEvent
+    data class SetExpense(val amount: String, val paymentMethodId: Int, val categoryId: Int) : DashboardEvent
     data class SortExpenses(val expenseCategory: ExpenseCategory)
     data class Delete(val expense: ExpenseEntity)
 }

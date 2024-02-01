@@ -21,23 +21,22 @@ class DashboardVM(
         when (event) {
             DashboardEvent.SaveExpense -> {
                 viewModelScope.launch {
-                    expenseRepo.saveExpense(
-                        Expense(amount = _state.value.amount)
-                    )
+                    _state.value.currentExpense?.let { expenseRepo.saveExpense(it) }
                 }
             }
 
-            is DashboardEvent.SetExpenseAmount -> {
+            is DashboardEvent.SetExpense -> {
+                val expense = Expense(
+                    amount = event.amount.toDouble()/100,
+                    paymentMethodId = event.paymentMethodId,
+                    categoryId = event.categoryId
+                )
                _state.update {
                    it.copy(
-                       amount = event.amount.toDouble()
+                       currentExpense = expense
                    )
                }
-                viewModelScope.launch {
-                    expenseRepo.saveExpense(
-                        Expense(amount = _state.value.amount)
-                    )
-                }
+                onEvent(DashboardEvent.SaveExpense)
             }
 
             DashboardEvent.ShowBottomSheet -> {

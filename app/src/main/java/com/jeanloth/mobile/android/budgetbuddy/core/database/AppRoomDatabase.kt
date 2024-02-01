@@ -8,7 +8,7 @@ import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.data.local.en
 
 @Database(
     entities = [ExpenseEntity::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(DateTypeConverter::class)
 abstract class AppRoomDatabase : RoomDatabase() {

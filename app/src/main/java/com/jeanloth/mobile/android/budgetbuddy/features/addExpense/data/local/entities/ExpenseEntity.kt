@@ -12,5 +12,7 @@ data class ExpenseEntity(
     @PrimaryKey(autoGenerate = true)
     val uid: Int,
     val amount: Double,
+    val paymentMethodId: Int,
+    val categoryId: Int,
     val date: LocalDate?
 )

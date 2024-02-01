@@ -71,8 +71,8 @@ fun DashboardScreen(
                 tonalElevation = 16.dp,
                 containerColor = Color.White
             ) {
-                ExpensesBottomSheet(onInputValidated = {
-                    onEvent(DashboardEvent.SetExpenseAmount(it))
+                ExpensesBottomSheet(onInputValidated = { amount, paymentMethodId, categoryId ->
+                    onEvent(DashboardEvent.SetExpense(amount, paymentMethodId, categoryId))
                     onEvent(DashboardEvent.HideBottomSheet)
 
                     Toast.makeText(mContext, "Expense saved !", Toast.LENGTH_LONG).show()

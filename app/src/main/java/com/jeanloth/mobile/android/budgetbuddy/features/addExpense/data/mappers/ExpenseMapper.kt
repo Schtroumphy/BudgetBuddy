@@ -11,7 +11,9 @@ class ExpenseMapper : Mapper<ExpenseEntity, Expense> {
         return Expense(
             uid = entity.uid,
             amount = entity.amount,
-            date = entity.date ?: LocalDate.now()
+            paymentMethodId = entity.paymentMethodId,
+            categoryId = entity.categoryId,
+            date = entity.date ?: LocalDate.now(),
         )
     }
 
@@ -19,6 +21,8 @@ class ExpenseMapper : Mapper<ExpenseEntity, Expense> {
         return ExpenseEntity(
             uid = pojo.uid,
             amount = pojo.amount,
+            paymentMethodId = pojo.paymentMethodId,
+            categoryId = pojo.categoryId,
             date = pojo.date
         )
     }
