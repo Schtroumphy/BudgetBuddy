@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
@@ -19,9 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardEvent
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardState
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardVM
+import com.jeanloth.mobile.android.budgetbuddy.features.splash.SplashVM
 import com.jeanloth.mobile.android.budgetbuddy.theme.BudgetBuddyTheme
 import com.jeanloth.mobile.android.budgetbuddy.views.molecules.Header
 import com.jeanloth.mobile.android.budgetbuddy.views.templates.ExpensesBottomSheet
@@ -29,8 +32,13 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : ComponentActivity() {
 
+    private val splashVM: SplashVM by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+
+        splashScreen.setKeepOnScreenCondition{ splashVM.isLoading.value }
+
         setContent {
             val dashboardVM = getViewModel<DashboardVM>()
             val dashboardState by dashboardVM.state.collectAsState()
