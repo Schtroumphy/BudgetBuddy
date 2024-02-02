@@ -14,8 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardEvent
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardState
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DashboardScreen(
@@ -51,6 +53,7 @@ fun DashboardScreen(
     onEvent: (DashboardEvent) -> Unit
 ) {
     val mContext = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         topBar = {
@@ -66,7 +69,9 @@ fun DashboardScreen(
     ) {
         if (state.isAddingExpense) {
             ModalBottomSheet(
-                onDismissRequest = { /*TODO*/ },
+                onDismissRequest = {
+                    onEvent(DashboardEvent.HideBottomSheet)
+                },
                 shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
                 tonalElevation = 16.dp,
                 containerColor = Color.White
@@ -78,6 +83,8 @@ fun DashboardScreen(
                     Toast.makeText(mContext, "Expense saved !", Toast.LENGTH_LONG).show()
                 })
             }
+        } else {
+            keyboardController?.hide()
         }
     }
 }
