@@ -1,6 +1,6 @@
 package com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation
 
-import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.Expense
+import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.models.Expense
 
 data class DashboardState (
     val expenses : List<Expense> = emptyList(),

@@ -2,7 +2,7 @@ package com.jeanloth.mobile.android.budgetbuddy.features.addExpense.data.mappers
 
 import com.jeanloth.mobile.android.budgetbuddy.core.Mapper
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.data.local.entities.ExpenseEntity
-import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.Expense
+import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.models.Expense
 import java.time.LocalDate
 
 

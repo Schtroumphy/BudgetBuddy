@@ -16,7 +16,6 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense WHERE uid IN (:expenseIds)")
     fun loadAllByIds(expenseIds: IntArray): Flow<List<ExpenseEntity>>
 
-
     @Upsert
     suspend fun upsert(expense: ExpenseEntity)
 

@@ -2,8 +2,8 @@ package com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.Expense
-import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.ExpenseRepository
+import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.models.Expense
+import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.repositories.ExpenseRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

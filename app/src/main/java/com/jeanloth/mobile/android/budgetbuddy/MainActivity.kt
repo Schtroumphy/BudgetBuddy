@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
@@ -24,23 +23,23 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardEvent
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardState
 import com.jeanloth.mobile.android.budgetbuddy.features.addExpense.presentation.DashboardVM
-import com.jeanloth.mobile.android.budgetbuddy.features.splash.SplashVM
+import com.jeanloth.mobile.android.budgetbuddy.features.splash.presentation.SplashVM
 import com.jeanloth.mobile.android.budgetbuddy.theme.BudgetBuddyTheme
 import com.jeanloth.mobile.android.budgetbuddy.views.molecules.Header
 import com.jeanloth.mobile.android.budgetbuddy.views.templates.ExpensesBottomSheet
-import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val splashVM: SplashVM by viewModel()
+    private val dashboardVM: DashboardVM by viewModel()
 
-    private val splashVM: SplashVM by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        splashScreen.setKeepOnScreenCondition{ splashVM.isLoading.value }
+        splashScreen.setKeepOnScreenCondition { splashVM.isLoading.value }
 
         setContent {
-            val dashboardVM = getViewModel<DashboardVM>()
             val dashboardState by dashboardVM.state.collectAsState()
 
             BudgetBuddyTheme {
@@ -53,7 +52,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class,)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DashboardScreen(

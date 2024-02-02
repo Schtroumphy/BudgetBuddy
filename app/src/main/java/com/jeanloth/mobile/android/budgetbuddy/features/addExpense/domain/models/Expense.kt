@@ -1,4 +1,4 @@
-package com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain
+package com.jeanloth.mobile.android.budgetbuddy.features.addExpense.domain.models
 
 import java.time.LocalDate
 
