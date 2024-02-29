@@ -50,27 +50,40 @@ import com.jeanloth.mobile.android.budgetbuddy.theme.spaceMedium
 import com.jeanloth.mobile.android.budgetbuddy.theme.spaceSmall
 import com.jeanloth.mobile.android.budgetbuddy.views.molecules.CategoryMenu
 import com.jeanloth.mobile.android.budgetbuddy.views.molecules.PaymentMenu
-import com.jeanloth.mobile.android.budgetbuddy.views.molecules.categories
-import com.jeanloth.mobile.android.budgetbuddy.views.molecules.paymentMethods
 import androidx.compose.material3.TextField as TextField1
+import com.jeanloth.mobile.android.budgetbuddy.views.molecules.MenuItem
+import categories
+import methods
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExpensesBottomSheet(onInputValidated: ((String, Int, Int) -> Unit)?) {
+fun ExpensesBottomSheet(
+    onInputValidated: ((String, Int, Int) -> Unit)?,
+    paymentMethods: List<MenuItem>,
+    categories: List<MenuItem>
+) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
-    var paymentMethodSelected: Int by remember { mutableIntStateOf(paymentMethods.first().id ) }
+    var paymentMethodSelected: Int by remember { mutableIntStateOf(paymentMethods.first().id) }
     var categorySelected: Int by remember { mutableIntStateOf(categories.first().id) }
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = spaceMedium),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            PaymentMenu(Modifier.weight(1f), onItemSelected =  {
-                paymentMethodSelected = it
-            })
-            CategoryMenu(Modifier.weight(1f), onItemSelected = {
-                categorySelected = it
-            })
+            PaymentMenu(
+                Modifier.weight(1f),
+                paymentMethods = paymentMethods,
+                onItemSelected = {
+                    paymentMethodSelected = it
+                },
+            )
+            CategoryMenu(
+                Modifier.weight(1f),
+                categories = categories,
+                onItemSelected = {
+                    categorySelected = it
+                },
+            )
         }
         Text(
             "Dépense",
@@ -100,7 +113,13 @@ fun ExpensesBottomSheet(onInputValidated: ((String, Int, Int) -> Unit)?) {
                 containerColor = Blue2, contentColor = Color.White,
             ),
             onClick = {
-                onInputValidated?.let { it(textFieldValue.text, paymentMethodSelected, categorySelected) }
+                onInputValidated?.let {
+                    it(
+                        textFieldValue.text,
+                        paymentMethodSelected,
+                        categorySelected
+                    )
+                }
             },
             content = {
                 Icon(Icons.Rounded.Check, contentDescription = null)
@@ -111,7 +130,11 @@ fun ExpensesBottomSheet(onInputValidated: ((String, Int, Int) -> Unit)?) {
 @Preview
 @Composable
 fun ExpensesBottomSheetPreview() {
-    ExpensesBottomSheet(onInputValidated = null)
+    ExpensesBottomSheet(
+        onInputValidated = null,
+        paymentMethods = methods,
+        categories = categories
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -141,7 +164,13 @@ fun ExpendedTextField(
 
     TextField1(
         value = textFieldValue,
-        onValueChange = { if (it.text.length < 6) onTextFieldValueChange?.let { function -> function(it) } },
+        onValueChange = {
+            if (it.text.length < 6) onTextFieldValueChange?.let { function ->
+                function(
+                    it
+                )
+            }
+        },
         placeholder = { Text(text = "") },
         modifier = modifier
             .focusRequester(focusRequester)

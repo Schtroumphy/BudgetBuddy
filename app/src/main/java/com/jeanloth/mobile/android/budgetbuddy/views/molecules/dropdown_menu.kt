@@ -11,14 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Money
-import androidx.compose.material.icons.filled.Savings
-import androidx.compose.material.icons.rounded.DirectionsCar
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Redeem
-import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material.icons.rounded.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -35,29 +28,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jeanloth.mobile.android.budgetbuddy.theme.LightBlue
 import com.jeanloth.mobile.android.budgetbuddy.theme.LightGreen1
-
-val paymentMethods = listOf(
-    MenuItem(1, Icons.Default.CreditCard, "Credit Card"),
-    MenuItem(2, Icons.Default.Money, "Cash"),
-    MenuItem(3, Icons.Default.Savings, "Savings"),
-)
-
-val paymentMenuColor = LightGreen1
-val categoryMenuColor = LightBlue
-
-val categories = listOf(
-    MenuItem(1, Icons.Rounded.ShoppingBag, "Clothes"),
-    MenuItem(2, Icons.Rounded.Redeem, "Gift"),
-    MenuItem(3, Icons.Rounded.DirectionsCar, "Car"),
-    MenuItem(4, Icons.Rounded.Public, "Online"),
-)
+import categoryMenuColor
+import paymentMenuColor
 
 class MenuItem(val id: Int, var icon: ImageVector, var label: String)
 
 @Composable
-fun PaymentMenu(modifier: Modifier = Modifier, onItemSelected: ((Int) -> Unit)? = null) {
+fun PaymentMenu(modifier: Modifier = Modifier, paymentMethods: List<MenuItem> = emptyList(), onItemSelected: ((Int) -> Unit)? = null) {
     CustomDropDown(
         modifier = modifier,
         paymentMethods,
@@ -67,7 +45,7 @@ fun PaymentMenu(modifier: Modifier = Modifier, onItemSelected: ((Int) -> Unit)? 
 }
 
 @Composable
-fun CategoryMenu(modifier: Modifier = Modifier, onItemSelected: ((Int) -> Unit)? = null) {
+fun CategoryMenu(modifier: Modifier = Modifier, categories: List<MenuItem> = emptyList(), onItemSelected: ((Int) -> Unit)? = null) {
     CustomDropDown(
         modifier = modifier,
         categories,

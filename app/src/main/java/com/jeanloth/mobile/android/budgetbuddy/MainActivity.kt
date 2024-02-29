@@ -83,7 +83,10 @@ fun DashboardScreen(
                 tonalElevation = 16.dp,
                 containerColor = Color.White
             ) {
-                ExpensesBottomSheet(onInputValidated = { amount, paymentMethodId, categoryId ->
+                ExpensesBottomSheet(
+                    paymentMethods = state.paymentMethods,
+                    categories = state.categories,
+                    onInputValidated = { amount, paymentMethodId, categoryId ->
                     onEvent(DashboardEvent.SetExpense(amount, paymentMethodId, categoryId))
                     onEvent(DashboardEvent.HideBottomSheet)
 
