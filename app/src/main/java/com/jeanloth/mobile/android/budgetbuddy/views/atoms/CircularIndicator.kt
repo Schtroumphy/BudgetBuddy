@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun CircularIndicator(
+    modifier: Modifier = Modifier,
     progress: Float = 0.75f,
-    modifier: Modifier = Modifier
 ) {
     CircularProgressIndicator(
         progress = progress,
